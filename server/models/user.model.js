@@ -20,9 +20,15 @@ const userSchema = new mongoose.Schema({
         min: 6,
     },
 
-    confirmPassword: {
-        type: String,
+    isAvatarImageSet: {
+        type: Boolean,
+        default: false
     },
+
+    avatarImage: {
+        type: String,
+        default: ""
+    }
 },
     {
         timestamps: true

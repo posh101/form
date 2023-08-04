@@ -4,67 +4,40 @@ const bcrypt = require('bcryptjs')
 require('dotenv/config')
 
 
-async function createUser(req, res) {
-   try {
-    const name = await User.findOne({username: req.body.username})
-    if(name) {
-        res.status(400).send('Username already exist')
+async function createUser(req, res, next) {
+  try {
+    const {username, email, password} = req.body
+    const usernameCheck = await User.findOne({username})
+    if(usernameCheck) {
+        return res.json({msg: "Username already exist", satus: false})
     }
 
-    const email = await User.findOne({email: req.body.email})
-    if(email) {
-        res.status(400).send('Email already exist')
+    const emailCheck = await User.findOne({email})
+    if(emailCheck) {
+        return res.json({msg: "Email already exist", status: false})
     }
 
+    const hashPassword = bcrypt.hashSync(password, 10)
     const user = new User({
-    username: req.body.username,
-    email: req.body.email,
-    password: bcrypt.hashSync(req.body.password, 10)
-    })
-    await user.save()
+    username,
+    email,
+    password: hashPassword
+})
+await user.save()
 
-    if(!user) {
-        res.status(400).json({success: false, message: 'Missing required property'})
-    }
-
-    else {
-        return res.status(201).send(user)
-    }
-
-   }catch(error) {
-    console.log(error)
-   }
+if(!user) {
+    return res.json({status: false, msg: "Missing required property"})
 }
 
-async function login(req, res) {
-    try {
-        
-        const user = await User.findOne( {email: req.body.email})
-        if(!user) {
-            res.status(400).json({message: 'Please type your email or password'})
-        }
+return res.send({status: true, user})
 
-     const SECRET = process.env.SECRET
-    if(user && bcrypt.compareSync(req.body.password, user.password)) {
-        const token = jwt.sign({
-            userId: user.id,
-        },
-        SECRET,
-        {expiresIn: '1d'}
-       
-    )
-    return res.status(200).send({ email: user.email, token: token})
-    }
-
-    }catch(error) {
-        console.log(error)
-    }
+}catch(ex) {
+    next(ex)
+}
 
 }
 
 module.exports = {
     createUser,
-    login,
-
 }
 

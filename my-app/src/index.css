@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;600;700&family=Josefin+Slab:wght@200;300;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body,
+input,
+button {
+  font-family: 'Josefin Sans', sans-serif;
+}
+
+body {
+  max-height: 100vh;
+  max-width: 100vw;
+  overflow: hidden;
+}
+
+.container {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: orangered;
+  gap: 1rem;
+}
+
+img {
+  height: 5rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  background-color: black;
+  padding: 1rem 2rem;
+  border-radius: 0.5rem;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+}
+
+.logo-text {
+  font-size:large;
+  font-weight: bolder;
+}
+
+h1 {
+  font-size:x-small;
+  color: white;
+  font-weight:lighter ;
+}
+
+input {
+ width: 15rem
+}
+
+.reg-text {
+  font-size: x-small;
+  color: white;
+  font-weight: lighter;
+}
+
+button {
+  padding: 0.3rem 4rem;
+  font-weight: bolder;
+}
+ 
